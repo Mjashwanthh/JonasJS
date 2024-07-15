@@ -1,0 +1,114 @@
+package com.example.config;
+
+import java.util.Comparator;
+
+//product class
+
+public class Product {
+
+    public int id;
+
+    public String productName;
+
+    public double price;
+
+    public Product(int id, String productName, double price) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+
+}
+-------------------------------------------------------------------
+//SortById
+
+package com.example.config;
+
+import java.util.Comparator;
+
+public class SortById implements Comparator<Product> {
+
+    @Override
+    public int compare(Product a, Product b) {
+        return a.id - b.id;
+    }
+
+}
+-------------------------------------------------------------------
+
+//SortByPrice
+
+package com.example.config;
+
+import java.util.Comparator;
+
+public class SortById implements Comparator<Product> {
+
+    @Override
+    public int compare(Product a, Product b) {
+        return a.id - b.id;
+    }
+
+}
+
+-------------------------------------------------------------------
+
+//UserInterface
+
+package com.example.config;
+
+import java.util.*;
+
+public class UserInterface {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the product count :\n");
+        int n = scanner.nextInt();
+        List<Product> productList = new ArrayList<>();
+        if (n <= 0) {
+            System.out.println("Invalid count");
+        } else {
+            while(n--> 0) {
+                System.out.println("Enter the product details :\n");
+                String s = scanner.next();
+                String[] productDetails = s.split(":");
+                int id = Integer.parseInt(productDetails[0]);
+                String name = productDetails[1];
+                double price = Double.parseDouble(productDetails[2]);
+                Product product = new Product(id, name, price);
+                productList.add(product);
+            }
+            if (productList != null && !productList.isEmpty()) {
+                System.out.println("1. Sort By Id\n 2. Sort By Price\n Enter your choice\n");
+                int choice = scanner.nextInt();
+                if (choice == 1) {
+                    Collections.sort(productList, new SortById());
+                    System.out.println("After choice by Id\n");
+                    for (Product product : productList) {
+                        System.out.println(product);
+                    }
+                } else if (choice == 2) {
+                    Collections.sort(productList, new SortByPrice());
+                    System.out.println("After choice by Price\n");
+                    for (Product product : productList) {
+                        System.out.println(product.toString());
+                    }
+                } else {
+                    System.out.println("Invalid choice");
+                }
+                }
+            }
+        }
+}
+
